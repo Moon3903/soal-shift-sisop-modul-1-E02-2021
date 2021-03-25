@@ -1,4 +1,4 @@
-# Soal Shift Sisop Modul 1
+# SoalShiftSISOP21_modul1_E02
 ## Anggota Kelompok E02
 0001-Christoper Baptista
 
