@@ -1,5 +1,6 @@
 #!/bin/bash
-filepath="/home/ryan/Desktop/modul1/soal3/"
+
+filepath="/home/christopher/Documents/SoalShift1/"
 bash "$filepath/soal3a.sh"
 foldername=$(date +"%d-%m-%Y")
 
