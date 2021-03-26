@@ -1,10 +1,10 @@
 # SoalShiftSISOP21_modul1_E02
 ## Anggota Kelompok E02
-05111940000001-Christoper Baptista
+05111940000001 - Christoper Baptista
 
-05111940000101-Zulfiqar Fauzul Akbar
+05111940000101 - Zulfiqar Fauzul Akbar
 
-05111940000152-Ryan Fernaldy
+05111940000152 - Ryan Fernaldy
 
 # Soal 1
 
@@ -121,7 +121,7 @@ Melakukan redirection untuk mengirim output laporan ke 'hasil.txt' dengan menamb
 ## Penjelasan
 a) Menulis script yang mengunduh 23 foto acak dari "https://loremflickr.com/320/240/kitten" lalu menyimpan lognya ke dalam file "Foto.log". Jika terunduh foto yang sama (telah terunduh sebelumnya), maka foto tersebut akan dihapus. Kemudian gambar disimpan dengan nama "Koleksi_XX" dengan XX adalah nomor antrian unduhan secara berurutan</br>
 b) Menulis script untuk menjalankan script 3a) secara otomatis sehari sekali setiap jam 8 malam mulai tanggal 1 tujuh hari sekali dan tanggal 2 empat hari sekali. Lalu memindahkan foto dan log ke dalam folder dengan nama tanggal unduhnya dengan format "dd-mm-yyyy"</br>
-c) Menulis script yang mengunduh 23 foto anak kucing dan 23 foto kelinci secara bergantian setiap hari. Kemudian membuat folder terpisah untuk gambar kucing dengan nama folder "Kucing_" dan folder untuk gambar kelinci dengan nama "Kelinci_"</br>
+c) Menulis script yang mengunduh 23 foto kucing (dari soal 3a) dan 23 foto kelinci dari "https://loremflickr.com/320/240/bunny" secara bergantian setiap hari. Kemudian membuat folder terpisah untuk gambar kucing dengan nama folder "Kucing_" dan folder untuk gambar kelinci dengan nama "Kelinci_"</br>
 d) Menulis script yang melakukan zip untuk seluruh folder gambar yang telah diunduh dengan nama "Koleksi.zip" serta diberi password yaitu tanggal saat ini dengan format "MMDDYYYY"</br>
 e) Menulis script yang melakukan unzip dari file zip 3d) dan menghapus file zip aslinya pada hari senin sampai jumat dari jam 7 pagi hingga 6 sore</br>
 
