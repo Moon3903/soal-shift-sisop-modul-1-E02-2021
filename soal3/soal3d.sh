@@ -1,6 +1,6 @@
 #!/bin/bash
 
-filepath="/home/ryan/Desktop/modul1/soal3/"
+filepath="/home/christopher/Documents/SoalShift1/"
 
 cd "$filepath"
 
