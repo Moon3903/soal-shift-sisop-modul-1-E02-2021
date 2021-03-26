@@ -14,7 +14,7 @@ a) Mencari Row ID dengan profit percentage terbesar pada setiap transaksi (jika 
 b) Mencari nama customer yang melakukan transaksi pada tahun 2017 di kota Albuquerque</br>
 c) Mencari segment customer dengan jumlah transaksinya paling sedikit</br>
 d) Mencari Region dengna total keuntungan (profit) paling sedikit</br>
-e) Membuat script laporan dari poin a,b,c,d hasilnya dismpan ke 'hasil.txt' dengan format</br>
+e) Membuat script laporan dari poin a,b,c,d hasilnya dismpan ke 'hasil.txt' dengan format:</br>
 
 ```
 Transaksi terakhir dengan profit percentage terbesar yaitu *ID Transaksi* dengan persentase *Profit Percentage*%.
