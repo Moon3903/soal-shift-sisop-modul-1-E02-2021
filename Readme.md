@@ -7,6 +7,17 @@
 05111940000152 - Ryan Fernaldy
 
 # Soal 1
+## Penyelesaian
+
+### Bagian poin 1a)
+
+### Bagian poin 1b)
+
+### Bagian poin 1c)
+
+### Bagian poin 1d)
+
+### Bagian poin 1e)
 
 # Soal 2
 ## Penjelasan
