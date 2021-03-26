@@ -1,0 +1,2 @@
+0 7 * * 1-5 /bin/bash /home/ryan/Desktop/modul1/soal3/soal3d.sh
+1 18 * * 1-5 unzip -P `date +"%d%m%Y" /home/ryan/Desktop/modul1/soal3/Koleksi.zip && rm /home/ryan/Desktop/modul1/soal3/Koleksi.zip
