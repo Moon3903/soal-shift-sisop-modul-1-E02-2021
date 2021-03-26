@@ -40,8 +40,6 @@ download(){
 			cmp -s $file1 $file2
 			if [ $? == 0 ]
 			then
-				#echo $file1 sama dengan $file2
-				#sleep 5
 				rm $file2
 				for((k=j+1; k<=jumlah; k++))
 				do
@@ -60,7 +58,6 @@ download(){
 
 
 yesterday=$(date -d "yesterday" +"%d-%m-%Y")
-echo $yesterday;
 
 # cek apakah direktori kucing kemarin sudah ada
 test -d "$filepath""Kucing_""$yesterday"
