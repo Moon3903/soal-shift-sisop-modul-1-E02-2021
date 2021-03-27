@@ -6,25 +6,112 @@
 
 05111940000152 - Ryan Fernaldy
 
+## Daftar Isi
+[Soal 1](https://github.com/Moon3903/soal-shift-sisop-modul-1-E02-2021#soal-1)
+[Soal 2](https://github.com/Moon3903/soal-shift-sisop-modul-1-E02-2021#soal-2)
+[Soal 3](https://github.com/Moon3903/soal-shift-sisop-modul-1-E02-2021#soal-3)
 # Soal 1
 ## Penjelasan
-a) Mengumpulkan informasi jenis log (ERROR/INFO), pesan log, dan username dari file syslog.log menggunakan regex.
-b) menampilkan semua pesan error yang muncul beserta jumlah kemunculannya.
-c) menampilkan jumlah kemunculan log ERROR dan INFO untuk setiap user-nya.
-d) Semua informasi yang didapatkan pada poin b dituliskan ke dalam file error_message.csv dengan header Error,Count yang kemudian diikuti oleh daftar pesan error dan jumlah kemunculannya diurutkan berdasarkan jumlah kemunculan pesan error dari yang terbanyak.
-e) Semua informasi yang didapatkan pada poin c dituliskan ke dalam file user_statistic.csv dengan header Username,INFO,ERROR diurutkan berdasarkan username secara ascending.
+a) Mengumpulkan informasi jenis log (ERROR/INFO), pesan log, dan username dari file syslog.log menggunakan regex.</br>
+b) menampilkan semua pesan error yang muncul beserta jumlah kemunculannya.</br>
+c) menampilkan jumlah kemunculan log ERROR dan INFO untuk setiap user-nya.</br>
+d) Semua informasi yang didapatkan pada poin b dituliskan ke dalam file error_message.csv dengan header Error,Count yang kemudian diikuti oleh daftar pesan error dan jumlah kemunculannya diurutkan berdasarkan jumlah kemunculan pesan error dari yang terbanyak.</br>
+e) Semua informasi yang didapatkan pada poin c dituliskan ke dalam file user_statistic.csv dengan header Username,INFO,ERROR diurutkan berdasarkan username secara ascending.</br>
 ## Penyelesaian
+### Bagian 1a)
+```
+grep -o 'y:.*' syslog.log | cut -f2- -d\ 
+hadeh=($(grep -o 'y:.*' syslog.log| cut -f2- -d\ ))
+```
 
-### Bagian poin 1a)
+Menggunakan grep untuk menggambil semua line lalu di tambahi parameter -o untuk mengambil bagian yang memenuhi saja di sini saya menggambil 'y:' dan sisanya '.*' lalu di cut dengan delimiter spasi dengan parameter f2 untuk mengambil bagian setelah delimiter saja agar menghilangkan 'y: '
 
-### Bagian poin 1b)
+### Bagian 1b)
+```
+grep -o 'ERROR.*' syslog.log | cut -f2- -d\ | cut -d"(" -f 1 | sort | uniq -c | sort -nr
+```
 
-### Bagian poin 1c)
+karena diminta bagian error saja saya merubah parameter grep dari 'y:.*' menjadi 'ERROR.*' setelah itu diberi cut dengan delimiter spasi dan parameter f2, karena setelah di lakukan cut pertama masih terdapat username maka saya menghapusnya dengan cut lagi dengan delimiter '(' dan parameter f1 untuk mengambil data sebelum delimiter, setelah itu di sort agar bisa melakukan uniq -c, uniq disini berguna untuk menghapus duplikat dan -c untuk menjumlahkan banyak duplikat tersebut, karena diminta urut dari error terbanyak saya sort lagi dengan parameter n dan r, n disini berarti numeric sort karena default nya ascending dan diminta descending maka di ber -r untuk meng-reverse hasilnya.
+### Bagian 1c)
+```
+grep -o 'ERROR.*' syslog.log | cut -f2- -d"(" |cut -d")" -f 1| sort | uniq -c
+grep -o 'INFO.*' syslog.log | cut -f2- -d"(" |cut -d")" -f 1| sort | uniq -c
+```
 
-### Bagian poin 1d)
+karena di minta kemunculan error dan info dari setiap user pertama saya mengambil semua line error/info terlebih dahulu setelah itu saya ambil usernamenya dengan dua cut dan delimiter '(' dan ')' agar mendapat bagian username saja setelah itu dilakukan sort dan uniq -c kembali untuk mendapat jumlahnya. tidak perlu di sort lagi karena nama sudah urut secara ascending
+### Bagian 1d)
+```
+hadeh=($(grep -o 'ERROR.*' syslog.log | cut -f2- -d\ | cut -d"(" -f 1 | sort | uniq -c | sort -nr))
+```
+karena data yang di dapat dari cara [b](https://github.com/Moon3903/soal-shift-sisop-modul-1-E02-2021#bagian-1b) masih memiliki format banyak-jenis error namun diminta dengan format jenis error-banyak maka perlu dilakukan pengolahan data
 
-### Bagian poin 1e)
+```
+cek=0
+space=0
+echo "Error,Count" > error_message.csv
+for i in "${!hadeh[@]}"
+do
+	if [[ "${hadeh[i]}" =~ ^[0-9] ]]
+	then
+		if [ $cek == 1 ]
+		then
+			space=0
+			echo ",$sebelum" >> error_message.csv
+		fi
+		cek=1
+		sebelum=${hadeh[i]}
+	else
+		if [ $space -gt 0 ]
+		then
+			echo -n " " >> error_message.csv
+		fi
+		echo -n ${hadeh[i]} >> error_message.csv
+		space=1 
+	fi
+done
+echo ",$sebelum" >> error_message.csv
+```
 
+Pertama saya memasukkan header terlebih dahulu kedalam file dan menghapus semua isi sebelumnya dengan '>'. Setelah itu saya menggunakan variable sebelum untuk menyimpan angka sementara dan variable space untuk mengetahui kapan harus menggunakan space, ketika mengoutputkan sebelum diberi endline karena angka berada di belakang, setelah itu saya iterasi semua data dan menambahkan output kedalam file.
+### Bagian 1e)
+```
+ERROR=($(grep -o 'ERROR.*' syslog.log | cut -f2- -d"(" |cut -d")" -f 1| sort | uniq -c))
+INFO=($(grep -o 'INFO.*' syslog.log | cut -f2- -d"(" |cut -d")" -f 1| sort | uniq -c))
+```
+menggunakan point [c](https://github.com/Moon3903/soal-shift-sisop-modul-1-E02-2021#bagian-1c) untuk menghitung banyak error dan info
+```
+e=0
+i=0
+
+echo "Username,INFO,ERROR" > user_statistic.csv
+
+while [ $i -lt ${#INFO[@]} ]
+do
+	while [[ "${INFO[i+1]}" > "${ERROR[e+1]}" ]]
+	do
+		echo "${ERROR[e+1]},0,${ERROR[e]}" >> user_statistic.csv
+		e=$(($e+2))
+	done
+	if [[ "${INFO[i+1]}" == "${ERROR[e+1]}" ]]
+	then
+		echo "${INFO[i+1]},${INFO[i]},${ERROR[e]}" >> user_statistic.csv
+		e=$(($e+2))
+	elif [[ "${INFO[i+1]}" < "${ERROR[e+1]}" ]]
+	then
+		echo "${INFO[i+1]},${INFO[i]},0" >> user_statistic.csv
+	fi
+	i=$(($i + 2))
+done
+
+while [ $e -lt ${#ERROR[@]} ]
+do
+	echo "${ERROR[e+1]},0,${ERROR[e]}" >> user_statistic.csv
+	e=$(($e+2))
+done
+```
+sama seperti point d karena ada format yang harus di penuhi maka harus dilakukan pengolahan data terlebih dahulu pertama saya melakukan iterasi while karena untuk setiap iterasi index harus ditambahkan 2 bukan 1, 
+
+lexicographically
 # Soal 2
 ## Penjelasan
 a) Mencari Row ID dengan profit percentage terbesar pada setiap transaksi (jika ada yang sama pilih Row ID terbesar)</br>
