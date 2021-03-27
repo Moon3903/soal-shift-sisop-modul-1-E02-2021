@@ -67,16 +67,14 @@ then
 	#download kelinci
 	today=$(date +"%d-%m-%Y")
 	foldername="Kelinci_""$today"
-	mkdir "$foldername"
 	filepath="$filepath""$foldername""/"
+	mkdir "$filepath"
 	download "Kelinci"
 else
 	#download kucing
 	today=$(date +"%d-%m-%Y")
 	foldername="Kucing_""$today"
-	mkdir "$foldername"
 	filepath="$filepath""$foldername""/"
+	mkdir "$filepath"
 	download "Kucing"
 fi
-
-
