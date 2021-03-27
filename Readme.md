@@ -129,21 +129,191 @@ Melakukan pengecekan untuk mencari region serta total keuntungannya yang paling 
 Melakukan redirection untuk mengirim output laporan ke 'hasil.txt' dengan menambahkan ``> hasil.txt`` pada bagian akhir
 
 # Soal 3
+
 ## Penjelasan
-a) Menulis script yang mengunduh 23 foto acak dari "https://loremflickr.com/320/240/kitten" lalu menyimpan lognya ke dalam file "Foto.log". Jika terunduh foto yang sama (telah terunduh sebelumnya), maka foto tersebut akan dihapus. Kemudian gambar disimpan dengan nama "Koleksi_XX" dengan XX adalah nomor antrian unduhan secara berurutan</br>
-b) Menulis script untuk menjalankan script 3a) secara otomatis sehari sekali setiap jam 8 malam mulai tanggal 1 tujuh hari sekali dan tanggal 2 empat hari sekali. Lalu memindahkan foto dan log ke dalam folder dengan nama tanggal unduhnya dengan format "dd-mm-yyyy"</br>
-c) Menulis script yang mengunduh 23 foto kucing (dari soal 3a) dan 23 foto kelinci dari "https://loremflickr.com/320/240/bunny" secara bergantian setiap hari. Kemudian membuat folder terpisah untuk gambar kucing dengan nama folder "Kucing_" dan folder untuk gambar kelinci dengan nama "Kelinci_"</br>
-d) Menulis script yang melakukan zip untuk seluruh folder gambar yang telah diunduh dengan nama "Koleksi.zip" serta diberi password yaitu tanggal saat ini dengan format "MMDDYYYY"</br>
-e) Menulis script yang melakukan unzip dari file zip 3d) dan menghapus file zip aslinya pada hari senin sampai jumat dari jam 7 pagi hingga 6 sore</br>
+
+a) Mengunduh 23 gambar dari "https://loremflickr.com/320/240/kitten" dan simpan log-nya ke file Foto.log kemudian hapus yang kembar dan disimpan dengan nama "Koleksi_XX". XX menyatakan nomor (01,02,...) secara berurutan tanpa ada nomor yang hilang. </br>
+b) Menjalankan script poin a) kemudian memindahkan gambar dan log ke folder dengan nama tanggal unduhnya "DD-MM-YYYY" secara otomatis pada jam 8 malam dari tanggal 1 tujuh hari sekali (1,8,...), serta dari tanggal 2 empat hari sekali(2,6,...). </br>
+c) Mengunduh 23 gambar kucing atau kelinci secara bergantian yang disimpan ke folder "Kucing_DD-MM-YYYY" atau "Kelinci_DD-MM-YYYY". Hari pertama bebas boleh kucing/kelinci, namun untuk hari berikutnya harus berbeda dengan hari sebelumnya. </br>
+d) Memindahkan seluruh folder ke zip dengan password tanggal saat ini "MMDDYYYY". </br>
+e) Setiap hari senin hingga jumat Melakukan zip pada jam 07.00 dan melakukan unzip pada jam 18.01. </br>
 
 ## Penyelesaian
 
-### Bagian poin 3a)
+### Soal 3a)
 
-### Bagian poin 3b)
+```
+generate_name(){
+	if [ $1 -lt 10 ]
+	then
+ 		filename="$filepath""Koleksi_0$1"
+	else
+ 		filename="$filepath""Koleksi_$1"
+	fi
+}
 
-### Bagian poin 3c)
+```
 
-### Bagian poin 3d)
+Fungsi generate_name() untuk men-generate namafile sesuai dengan angka yang diberikan pada saat pemanggilan
 
-### Bagian poin 3e)
+```
+jumlah=23;
+for((i=1; i<=jumlah; i++))
+do
+	generate_name "$i"
+	wget -a "$filepath"Foto.log -O "$filename" https://loremflickr.com/320/240/kitten
+	echo "$filename: Foto terdownload âœ“"
+done
+
+```
+
+Mendowload gambar sebanyak 23 kali dengan for loop. pada wget terdapat -a untuk melakukan append pencatatan log, -O untuk me-rename gambar.
+
+```
+for ((i=1; i<=jumlah; i++))
+do
+ 	generate_name "$i"
+ 	file1=$filename;
+
+ 	for((j=i+1; j<=jumlah; j++))
+ 	do
+  		generate_name "$j"
+  		file2=$filename;
+
+  		cmp -s $file1 $file2
+  		if [ $? == 0 ]
+  		then
+  			echo "$filename: Terdapat foto yang sama âœ—"
+   			echo "$filename: Foto terhapus âœ“"
+   			rm $file2
+   			for ((k=j+1; k<=jumlah; k++))
+   			do
+    				generate_name "$k"
+    				file3=$filename;
+    				generate_name "$(($k-1))"
+    				newname=$filename;
+    				mv "$file3" "$newname";
+   			done
+   			jumlah=$(($jumlah-1))
+   			j=$(($j-1))
+  		fi
+ 	done
+done
+```
+
+Melakukan pengecekan apakah ada gambar yang kembar. Gambar ke-i akan dibandingkan dengan gambar ke i+1 hingga jumlah. Pengecekan menggunakan `cmp -s file1 file2` yang akan memberikan exit status 0 juka kedua file sama. Exit status 0 dapat diambil dengan variabel `$?`. Jika kembar maka file yang terakhir dihapus dan file yang berada di belakang file tersebut namanya akan direname menjadi satu urutan lebih maju.
+
+### Soal 3b)
+
+Pada script `soal3b.sh`:</br>
+
+```
+CODE soal3b.sh
+```
+
+Menjalankan script `soal3a.sh`. `mkdir` untuk membuat folder baru. Setelah itu memindahkan gambar dengan `mv "$filepath"Koleksi* "$filepath""$foldername/"` serta log dengan
+`mv "$filepath"Foto.log "$filepath""$foldername/"`
+
+Pada script `cron3b.tab`:</br>
+
+```
+CODE cron3b.tab
+```
+
+Menjalankan script `soal3b.sh`.Kolom pertama menunjukan pada menit 0. Kolom kedua menujukkan pukul 20. Kolom ketiga menunjukkan tanggal 1 hingga tanggal 31 dengan step counter setiap 7 hari dan tanggal 2 hingga tanggal 31 dengan step counter 4 hari.
+
+### Soal 3c)
+
+Secara konsep mirip dengan penjalasan pada soal 3a). Fungsi generate_name() sama dengan yang ada soal 3a).
+
+```
+download(){
+	jumlah=23;
+
+	for((i=1; i<=jumlah; i++))
+	do
+		generate_name "$i"
+		if [ $1 == "Kucing" ]
+		then
+			wget -a "$filepath"Foto.log -O "$filename" https://loremflickr.com/320/240/kitten
+		elif [ $1 == "Kelinci" ]
+		then
+			wget -a "$filepath"Foto.log -O "$filename" https://loremflickr.com/320/240/bunny
+		fi
+	done
+
+
+	for((i=1; i<=jumlah; i++))
+	do
+		generate_name "$i"
+		file1=$filename;
+
+		for((j=i+1; j<=jumlah; j++))
+		do
+			generate_name "$j"
+			file2=$filename;
+
+			cmp -s $file1 $file2
+			if [ $? == 0 ]
+			then
+				rm $file2
+				for((k=j+1; k<=jumlah; k++))
+				do
+					generate_name "$k"
+					file3=$filename;
+					generate_name "$(($k-1))"
+					newname=$filename;
+					mv "$file3" "$newname";
+				done
+				jumlah=$(($jumlah-1))
+				j=$(($j-1))
+			fi
+		done
+	done
+}
+```
+
+Cara mendownload mirip dengan soal 3a) hanya saja dibuat kedalam fungsi karena harus mendownload dari gambar yang berbeda sesuai dengan kondisi. Fungsi download() akan menerima parameter "Kucing" atau "Kelinci" saat dipanggil.
+
+```
+yesterday=$(date -d "yesterday" +"%d-%m-%Y")
+
+# cek apakah direktori kucing kemarin sudah ada
+test -d "$filepath""Kucing_""$yesterday"
+
+if [ $? = 0 ]
+then
+	#download kelinci
+	today=$(date +"%d-%m-%Y")
+	foldername="Kelinci_""$today"
+	filepath="$filepath""$foldername""/"
+	mkdir "$filepath"
+	download "Kelinci"
+else
+	#download kucing
+	today=$(date +"%d-%m-%Y")
+	foldername="Kucing_""$today"
+	filepath="$filepath""$foldername""/"
+	mkdir "$filepath"
+	download "Kucing"
+fi
+```
+
+Melakukan pengecekan apakah ada folder `Kucing_$yesterday` dengan `$yesterday` adalah tanggal kemarin yang dapat diperoleh `$(date -d "yesterday" +"%d-%m-%Y")`. Pengecekan dapat dilakukan dengan `test -d "$filepath""Kucing_""$yesterday"` yang akan memberikan exit status 0 jika folder ditemukan. Exit status dapat diambil dengan variabel `$?`. Jika sudah ada, maka buat folder baru dengan `mkdir` kemudian panggil fungsi `download` dengan parameter `"Kelinci"`. Demikian pula sebaliknya.
+
+### Soal 3d)
+
+```
+CODE!!!!
+```
+
+Sebelum melakukan zip, harus dipastikan berada di posisi direktori yang sesuai menggunakan `cd`. Password sesuai dengan perintah dapat diperoleh dari `$(date +"%m%d%Y")`. Kemudian memindahkan seluruh folder hasil unduhan ke dalam zip (menggunakan `-rm`). Untuk mengambil file yang berupa directory saja menggunakan path `./*/`.
+
+### Soal 3e)
+
+```
+CODE!!!!
+```
+
+- Pada baris pertama untuk melakukan zip dengan menjalankan script `soal3d.sh`. Kolom pertama menyatakan menit 0, kolom kedua menyatakan pukul 7, kolom kelima menunjukkan hari Senin hingga hari Jumat.
+- Pada baris kedua untuk melakukan unzip dengan password (menggunakan `-P`) berupa tanggal hari ini sesuai dengan format yang dapat diperoleh dari `` `date +"\%m\%d\%Y"` `` kemudian `-d` untuk mengatur hasil extract. Setelah itu menghapus file zip dengan `rm`. Zip dilakukan dari pukul 7 hingga pukul 18 artinya unzip dapat dilakukan pada pukul 18.01. Kolom pertama menyatakan menit 1, kolom kedua menyatakan pukul 18, kolom kelima menunjukkan hari Senin hingga hari Jumat.
