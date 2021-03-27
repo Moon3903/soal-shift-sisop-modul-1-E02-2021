@@ -7,6 +7,12 @@
 05111940000152 - Ryan Fernaldy
 
 # Soal 1
+## Penjelasan
+a) Mengumpulkan informasi jenis log (ERROR/INFO), pesan log, dan username dari file syslog.log menggunakan regex.
+b) menampilkan semua pesan error yang muncul beserta jumlah kemunculannya.
+c) menampilkan jumlah kemunculan log ERROR dan INFO untuk setiap user-nya.
+d) Semua informasi yang didapatkan pada poin b dituliskan ke dalam file error_message.csv dengan header Error,Count yang kemudian diikuti oleh daftar pesan error dan jumlah kemunculannya diurutkan berdasarkan jumlah kemunculan pesan error dari yang terbanyak.
+e) Semua informasi yang didapatkan pada poin c dituliskan ke dalam file user_statistic.csv dengan header Username,INFO,ERROR diurutkan berdasarkan username secara ascending.
 ## Penyelesaian
 
 ### Bagian poin 1a)
