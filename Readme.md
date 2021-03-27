@@ -168,7 +168,7 @@ for((i=1; i<=jumlah; i++))
 do
 	generate_name "$i"
 	wget -a "$filepath"Foto.log -O "$filename" https://loremflickr.com/320/240/kitten
-	echo "$filename: Foto terdownload âœ“"
+	echo "$filename: Foto terdownload"
 done
 
 ```
@@ -189,8 +189,8 @@ do
   		cmp -s $file1 $file2
   		if [ $? == 0 ]
   		then
-  			echo "$filename: Terdapat foto yang sama âœ—"
-   			echo "$filename: Foto terhapus âœ“"
+  			echo "$filename: Terdapat foto yang sama"
+   			echo "$filename: Foto terhapus"
    			rm $file2
    			for ((k=j+1; k<=jumlah; k++))
    			do
@@ -214,7 +214,9 @@ Melakukan pengecekan apakah ada gambar yang kembar. Gambar ke-i akan dibandingka
 Pada script `soal3b.sh`:</br>
 
 ```
-CODE soal3b.sh
+mkdir "$filepath""$foldername"
+mv "$filepath"Koleksi* "$filepath""$foldername/"
+mv "$filepath"Foto.log "$filepath""$foldername/"
 ```
 
 Menjalankan script `soal3a.sh`. `mkdir` untuk membuat folder baru. Setelah itu memindahkan gambar dengan `mv "$filepath"Koleksi* "$filepath""$foldername/"` serta log dengan
@@ -223,7 +225,7 @@ Menjalankan script `soal3a.sh`. `mkdir` untuk membuat folder baru. Setelah itu m
 Pada script `cron3b.tab`:</br>
 
 ```
-CODE cron3b.tab
+0 20 1-31/7,2-31/4 * * /bin/bash ~/Documents/SoalShift1/soal3b.sh
 ```
 
 Menjalankan script `soal3b.sh`.Kolom pertama menunjukan pada menit 0. Kolom kedua menujukkan pukul 20. Kolom ketiga menunjukkan tanggal 1 hingga tanggal 31 dengan step counter setiap 7 hari dan tanggal 2 hingga tanggal 31 dengan step counter 4 hari.
@@ -310,7 +312,9 @@ Melakukan pengecekan apakah ada folder `Kucing_$yesterday` dengan `$yesterday` a
 ### Soal 3d)
 
 ```
-CODE!!!!
+cd "$filepath"
+password=$(date +"%m%d%Y")
+zip --password "$password" -rm Koleksi ./*/
 ```
 
 Sebelum melakukan zip, harus dipastikan berada di posisi direktori yang sesuai menggunakan `cd`. Password sesuai dengan perintah dapat diperoleh dari `$(date +"%m%d%Y")`. Kemudian memindahkan seluruh folder hasil unduhan ke dalam zip (menggunakan `-rm`). Untuk mengambil file yang berupa directory saja menggunakan path `./*/`.
@@ -318,7 +322,8 @@ Sebelum melakukan zip, harus dipastikan berada di posisi direktori yang sesuai m
 ### Soal 3e)
 
 ```
-CODE!!!!
+0 7 * * 1-5 /bin/bash ~/Documents/SoalShift1/soal3d.sh
+1 18 * * 1-5 unzip -P `date +"\%m\%d\%Y"` ~/Documents/SoalShift1/Koleksi.zip -d ~/Documents/SoalShift1/ && rm ~/Documents/SoalShift1/Koleksi.zip
 ```
 
 - Pada baris pertama untuk melakukan zip dengan menjalankan script `soal3d.sh`. Kolom pertama menyatakan menit 0, kolom kedua menyatakan pukul 7, kolom kelima menunjukkan hari Senin hingga hari Jumat.
