@@ -167,7 +167,6 @@ do
 	e=$(($e+2))
 done
 ```
-lexicographically
 # Soal 2
 ## Penjelasan
 a) Mencari Row ID dengan profit percentage terbesar pada setiap transaksi (jika ada yang sama pilih Row ID terbesar)</br>
