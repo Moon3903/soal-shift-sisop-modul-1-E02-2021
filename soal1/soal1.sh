@@ -54,10 +54,20 @@ echo "Username,INFO,ERROR" > user_statistic.csv
 
 while [ $i -lt ${#INFO[@]} ]
 do
+	if [ $e -ge ${#ERROR[@]} ]
+	then
+		echo "${INFO[i+1]},${INFO[i]},0" >> user_statistic.csv
+		i=$(($i + 2))
+		continue
+	fi
 	while [[ "${INFO[i+1]}" > "${ERROR[e+1]}" ]]
 	do
 		echo "${ERROR[e+1]},0,${ERROR[e]}" >> user_statistic.csv
 		e=$(($e+2))
+		if [ $e -ge ${#ERROR[@]} ]
+		then
+			break
+		fi
 	done
 	if [[ "${INFO[i+1]}" == "${ERROR[e+1]}" ]]
 	then
