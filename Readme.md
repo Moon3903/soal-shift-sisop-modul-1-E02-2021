@@ -7,9 +7,9 @@
 05111940000152 - Ryan Fernaldy
 
 ## Daftar Isi
-[Soal 1](https://github.com/Moon3903/soal-shift-sisop-modul-1-E02-2021#soal-1)
-[Soal 2](https://github.com/Moon3903/soal-shift-sisop-modul-1-E02-2021#soal-2)
-[Soal 3](https://github.com/Moon3903/soal-shift-sisop-modul-1-E02-2021#soal-3)
+[Soal 1](https://github.com/Moon3903/soal-shift-sisop-modul-1-E02-2021#soal-1) </br>
+[Soal 2](https://github.com/Moon3903/soal-shift-sisop-modul-1-E02-2021#soal-2) </br>
+[Soal 3](https://github.com/Moon3903/soal-shift-sisop-modul-1-E02-2021#soal-3) </br>
 # Soal 1
 ## Penjelasan
 a) Mengumpulkan informasi jenis log (ERROR/INFO), pesan log, dan username dari file syslog.log menggunakan regex.</br>
@@ -87,10 +87,20 @@ echo "Username,INFO,ERROR" > user_statistic.csv
 
 while [ $i -lt ${#INFO[@]} ]
 do
+	if [ $e -ge ${#ERROR[@]} ]
+	then
+		echo "${INFO[i+1]},${INFO[i]},0" >> user_statistic.csv
+		i=$(($i + 2))
+		continue
+	fi
 	while [[ "${INFO[i+1]}" > "${ERROR[e+1]}" ]]
 	do
 		echo "${ERROR[e+1]},0,${ERROR[e]}" >> user_statistic.csv
 		e=$(($e+2))
+		if [ $e -ge ${#ERROR[@]} ]
+		then
+			break
+		fi
 	done
 	if [[ "${INFO[i+1]}" == "${ERROR[e+1]}" ]]
 	then
@@ -109,8 +119,54 @@ do
 	e=$(($e+2))
 done
 ```
-sama seperti point d karena ada format yang harus di penuhi maka harus dilakukan pengolahan data terlebih dahulu pertama saya melakukan iterasi while karena untuk setiap iterasi index harus ditambahkan 2 bukan 1, 
-
+sama seperti point d karena ada format yang harus di penuhi maka harus dilakukan pengolahan data terlebih dahulu pertama saya melakukan iterasi while karena untuk setiap iterasi index harus ditambahkan 2 bukan 1, loop yang pertama untuk mengloop data pada info
+```
+while [ $i -lt ${#INFO[@]} ]
+do
+	...
+done
+```
+di dalamnya pertama terdapat if untuk mengecek apakah masih ada data dalam error
+```
+if [ $e -ge ${#ERROR[@]} ]
+then
+	echo "${INFO[i+1]},${INFO[i]},0" >> user_statistic.csv
+	i=$(($i + 2))
+	continue
+fi
+```
+jika data dalam error sudah habis maka tinggal di output username, banyak info, 0. 0 karena user tersebut tidak pernah error</br>
+setelah if di dalam while info terdapat while lagi karena username harus ascending lexicographically maka ketika di error ada data yang lebih kecil secara lexicographically harus di olah dahulu dengan cara mengloop hingga sama dengan atau lebih besar dari info tidak lupa di outputkan dan di cek apakah data error masih ada
+```
+while [[ "${INFO[i+1]}" > "${ERROR[e+1]}" ]]
+do
+	echo "${ERROR[e+1]},0,${ERROR[e]}" >> user_statistic.csv
+	e=$(($e+2))
+	if [ $e -ge ${#ERROR[@]} ]
+	then
+		break
+	fi
+done
+```
+setelah itu masih ada if else di dalah while loop info jika data nama pada info dan error sama maka user tersebut pernah memasukkan info dan terkena error maka di output nama, jumlah info, jumlah error. else terjadi ketika username pada info lexicographically lebih kecil dari pada di error itu menandakan user tersebut tidak pernah terkena error maka saya outputkan username,jumlah info, 0.
+```
+if [[ "${INFO[i+1]}" == "${ERROR[e+1]}" ]]
+then
+	echo "${INFO[i+1]},${INFO[i]},${ERROR[e]}" >> user_statistic.csv
+	e=$(($e+2))
+elif [[ "${INFO[i+1]}" < "${ERROR[e+1]}" ]]
+then
+	echo "${INFO[i+1]},${INFO[i]},0" >> user_statistic.csv
+fi
+```
+ketika keluar dari loop info berarti data pada info sudah habis tapi bukan berarti data pada error sudah habis oleh karena itu perlu dilakukan while pada error untuk mengoutput semua datanya sesuai format
+```
+while [ $e -lt ${#ERROR[@]} ]
+do
+	echo "${ERROR[e+1]},0,${ERROR[e]}" >> user_statistic.csv
+	e=$(($e+2))
+done
+```
 lexicographically
 # Soal 2
 ## Penjelasan
