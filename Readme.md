@@ -276,6 +276,9 @@ Melakukan pengecekan untuk mencari region serta total keuntungannya yang paling 
 ### Menyimpan output ke 'hasil.txt'
 Melakukan redirection untuk mengirim output laporan ke 'hasil.txt' dengan menambahkan ``> hasil.txt`` pada bagian akhir
 
+### Hasil
+![Hasil_no2](https://user-images.githubusercontent.com/68326540/113412819-6bc71300-93e3-11eb-9316-f4e1ac90ee14.png)
+
 # Soal 3
 
 ## Penjelasan
