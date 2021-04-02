@@ -494,3 +494,12 @@ Sebelum melakukan zip, harus dipastikan berada di posisi direktori yang sesuai m
 #### Hasil (crontab)
 ![Hasil_3e_zip](https://user-images.githubusercontent.com/68326540/113419184-26a9dd80-93f1-11eb-9ef3-16fc0e4671a1.png)
 ![Hasil_3e_unzip](https://user-images.githubusercontent.com/68326540/113419257-450fd900-93f1-11eb-8b6b-798c5e070128.png)
+
+
+## Kendala
+Soal 1:
+
+Soal 2:
+- Data dari file sangat banyak, sehingga kesulitan untuk melakukan pengecekan output.
+
+Soal 3:
