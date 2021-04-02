@@ -171,8 +171,8 @@ done
 ## Penjelasan
 a) Mencari Row ID dengan profit percentage terbesar pada setiap transaksi (jika ada yang sama pilih Row ID terbesar)</br>
 b) Mencari nama customer yang melakukan transaksi pada tahun 2017 di kota Albuquerque</br>
-c) Mencari segment customer dengan jumlah transaksinya paling sedikit</br>
-d) Mencari Region dengan total keuntungan (profit) paling sedikit</br>
+c) Mencari segment customer serta jumlah transaksinya yang paling sedikit</br>
+d) Mencari Region serta total keuntungannya yang paling sedikit</br>
 e) Membuat script laporan dari poin a,b,c,d hasilnya disimpan ke 'hasil.txt' dengan format:</br>
 
 ```
@@ -356,6 +356,9 @@ Melakukan pengecekan apakah ada gambar yang kembar. Gambar ke-i akan dibandingka
 Pada script `soal3b.sh`:</br>
 
 ```
+bash "$filepath""soal3a.sh"
+foldername=$(date +"%d-%m-%Y")
+
 mkdir "$filepath""$foldername"
 mv "$filepath"Koleksi* "$filepath""$foldername/"
 mv "$filepath"Foto.log "$filepath""$foldername/"
