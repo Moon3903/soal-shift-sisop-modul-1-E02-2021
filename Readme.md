@@ -354,6 +354,9 @@ done
 
 Melakukan pengecekan apakah ada gambar yang kembar. Gambar ke-i akan dibandingkan dengan gambar ke i+1 hingga jumlah. Pengecekan menggunakan `cmp -s file1 file2` yang akan memberikan exit status 0 juka kedua file sama. Exit status 0 dapat diambil dengan variabel `$?`. Jika kembar maka file yang terakhir dihapus dan file yang berada di belakang file tersebut namanya akan direname menjadi satu urutan lebih maju.
 
+#### Hasil
+![Hasil_3a](https://user-images.githubusercontent.com/68326540/113418831-70de8f00-93f0-11eb-920d-18926bf71168.png)
+
 ### Soal 3b)
 
 Pada script `soal3b.sh`:</br>
@@ -377,6 +380,9 @@ Pada script `cron3b.tab`:</br>
 ```
 
 Menjalankan script `soal3b.sh`.Kolom pertama menunjukan pada menit 0. Kolom kedua menujukkan pukul 20. Kolom ketiga menunjukkan tanggal 1 hingga tanggal 31 dengan step counter setiap 7 hari dan tanggal 2 hingga tanggal 31 dengan step counter 4 hari.
+
+#### Hasil (crontab)
+![Hasil_3b](https://user-images.githubusercontent.com/68326540/113418922-a08d9700-93f0-11eb-96ef-6358718fa2ed.png)
 
 ### Soal 3c)
 
@@ -457,6 +463,10 @@ fi
 
 Melakukan pengecekan apakah ada folder `Kucing_$yesterday` dengan `$yesterday` adalah tanggal kemarin yang dapat diperoleh `$(date -d "yesterday" +"%d-%m-%Y")`. Pengecekan dapat dilakukan dengan `test -d "$filepath""Kucing_""$yesterday"` yang akan memberikan exit status 0 jika folder ditemukan. Exit status dapat diambil dengan variabel `$?`. Jika sudah ada, maka buat folder baru dengan `mkdir` kemudian panggil fungsi `download` dengan parameter `"Kelinci"`. Demikian pula sebaliknya.
 
+#### Hasil
+![Hasil_3c](https://user-images.githubusercontent.com/68326540/113419014-c74bcd80-93f0-11eb-97b7-67d2b415fc99.png)
+
+
 ### Soal 3d)
 
 ```
@@ -467,6 +477,10 @@ zip --password "$password" -rm Koleksi ./*/
 
 Sebelum melakukan zip, harus dipastikan berada di posisi direktori yang sesuai menggunakan `cd`. Password sesuai dengan perintah dapat diperoleh dari `$(date +"%m%d%Y")`. Kemudian memindahkan seluruh folder hasil unduhan ke dalam zip (menggunakan `-rm`). Untuk mengambil file yang berupa directory saja menggunakan path `./*/`.
 
+#### Hasil
+![Hasil_3d_1](https://user-images.githubusercontent.com/68326540/113419049-ddf22480-93f0-11eb-8c1b-cc4ac49fc56a.png)
+![Hasil_3d_2](https://user-images.githubusercontent.com/68326540/113419097-f19d8b00-93f0-11eb-8e83-73a331f8f61d.png)
+
 ### Soal 3e)
 
 ```
@@ -476,3 +490,7 @@ Sebelum melakukan zip, harus dipastikan berada di posisi direktori yang sesuai m
 
 - Pada baris pertama untuk melakukan zip dengan menjalankan script `soal3d.sh`. Kolom pertama menyatakan menit 0, kolom kedua menyatakan pukul 7, kolom kelima menunjukkan hari Senin hingga hari Jumat.
 - Pada baris kedua untuk melakukan unzip dengan password (menggunakan `-P`) berupa tanggal hari ini sesuai dengan format yang dapat diperoleh dari `` `date +"\%m\%d\%Y"` `` kemudian `-d` untuk mengatur hasil extract. Setelah itu menghapus file zip dengan `rm`. Zip dilakukan dari pukul 7 hingga pukul 18 artinya unzip dapat dilakukan pada pukul 18.01. Kolom pertama menyatakan menit 1, kolom kedua menyatakan pukul 18, kolom kelima menunjukkan hari Senin hingga hari Jumat.
+
+#### Hasil (crontab)
+![Hasil_3e_zip](https://user-images.githubusercontent.com/68326540/113419184-26a9dd80-93f1-11eb-9ef3-16fc0e4671a1.png)
+![Hasil_3e_unzip](https://user-images.githubusercontent.com/68326540/113419257-450fd900-93f1-11eb-8b6b-798c5e070128.png)
