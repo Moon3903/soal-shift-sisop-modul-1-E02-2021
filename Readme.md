@@ -503,5 +503,6 @@ Soal 2:
 - Data dari file sangat banyak, sehingga kesulitan untuk melakukan pengecekan output.
 
 Soal 3:
-- Crontab tidak bisa menjanlankan script. Hal itu dapat diatasi dengan memberi filepath yang lengkap pada setiap command.
-- Syntax Zip dan unzip harus membaca manual(pentunjuk) yang sangat banyak
+- Crontab tidak bisa menjalankan script. Hal itu dapat diatasi dengan memberi filepath yang lengkap pada setiap command.
+- Syntax zip dan unzip harus membaca manual (petunjuk) yang sangat banyak.
+- Harus mengganti tanggal menggunakan command sudo untuk menjalankan crontab.
