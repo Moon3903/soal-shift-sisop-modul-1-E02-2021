@@ -26,12 +26,19 @@ hadeh=($(grep -o 'y:.*' syslog.log| cut -f2- -d\ ))
 
 Menggunakan grep untuk menggambil semua line lalu di tambahi parameter -o untuk mengambil bagian yang memenuhi saja di sini saya menggambil 'y:' dan sisanya '.*' lalu di cut dengan delimiter spasi dengan parameter f2 untuk mengambil bagian setelah delimiter saja agar menghilangkan 'y: '
 
+#### hasil
+![Screenshot from 2021-04-03 19-26-13](https://user-images.githubusercontent.com/62832487/113478765-1e1adb00-94b5-11eb-8fea-b39c645f6e69.png)
+
 ### Bagian 1b)
 ```
 grep -o 'ERROR.*' syslog.log | cut -f2- -d\ | cut -d"(" -f 1 | sort | uniq -c | sort -nr
 ```
 
 karena diminta bagian error saja saya merubah parameter grep dari 'y:.*' menjadi 'ERROR.*' setelah itu diberi cut dengan delimiter spasi dan parameter f2, karena setelah di lakukan cut pertama masih terdapat username maka saya menghapusnya dengan cut lagi dengan delimiter '(' dan parameter f1 untuk mengambil data sebelum delimiter, setelah itu di sort agar bisa melakukan uniq -c, uniq disini berguna untuk menghapus duplikat dan -c untuk menjumlahkan banyak duplikat tersebut, karena diminta urut dari error terbanyak saya sort lagi dengan parameter n dan r, n disini berarti numeric sort karena default nya ascending dan diminta descending maka di ber -r untuk meng-reverse hasilnya.
+
+#### hasil
+![Screenshot from 2021-04-03 19-26-37](https://user-images.githubusercontent.com/62832487/113478778-3854b900-94b5-11eb-8703-81b331a78823.png)
+
 ### Bagian 1c)
 ```
 grep -o 'ERROR.*' syslog.log | cut -f2- -d"(" |cut -d")" -f 1| sort | uniq -c
@@ -39,6 +46,11 @@ grep -o 'INFO.*' syslog.log | cut -f2- -d"(" |cut -d")" -f 1| sort | uniq -c
 ```
 
 karena di minta kemunculan error dan info dari setiap user pertama saya mengambil semua line error/info terlebih dahulu setelah itu saya ambil usernamenya dengan dua cut dan delimiter '(' dan ')' agar mendapat bagian username saja setelah itu dilakukan sort dan uniq -c kembali untuk mendapat jumlahnya. tidak perlu di sort lagi karena nama sudah urut secara ascending
+
+#### hasil
+![Screenshot from 2021-04-03 19-27-11](https://user-images.githubusercontent.com/62832487/113478813-73ef8300-94b5-11eb-84ce-e2753c8e3f57.png)
+![Screenshot from 2021-04-03 19-27-18](https://user-images.githubusercontent.com/62832487/113478814-7651dd00-94b5-11eb-9d0b-fa4618893d9f.png)
+
 ### Bagian 1d)
 ```
 hadeh=($(grep -o 'ERROR.*' syslog.log | cut -f2- -d\ | cut -d"(" -f 1 | sort | uniq -c | sort -nr))
@@ -73,6 +85,10 @@ echo ",$sebelum" >> error_message.csv
 ```
 
 Pertama saya memasukkan header terlebih dahulu kedalam file dan menghapus semua isi sebelumnya dengan '>'. Setelah itu saya menggunakan variable sebelum untuk menyimpan angka sementara dan variable space untuk mengetahui kapan harus menggunakan space, ketika mengoutputkan sebelum diberi endline karena angka berada di belakang, setelah itu saya iterasi semua data dan menambahkan output kedalam file.
+
+#### hasil
+![Screenshot from 2021-04-03 19-28-13](https://user-images.githubusercontent.com/62832487/113478836-91245180-94b5-11eb-9fd9-4100a9b13317.png)
+
 ### Bagian 1e)
 ```
 ERROR=($(grep -o 'ERROR.*' syslog.log | cut -f2- -d"(" |cut -d")" -f 1| sort | uniq -c))
@@ -167,6 +183,10 @@ do
 	e=$(($e+2))
 done
 ```
+
+#### hasil
+![Screenshot from 2021-04-03 19-28-38](https://user-images.githubusercontent.com/62832487/113478856-aac59900-94b5-11eb-8079-41eb5328647d.png)
+
 # Soal 2
 ## Penjelasan
 a) Mencari Row ID dengan profit percentage terbesar pada setiap transaksi (jika ada yang sama pilih Row ID terbesar)</br>
@@ -498,6 +518,7 @@ Sebelum melakukan zip, harus dipastikan berada di posisi direktori yang sesuai m
 
 ## Kendala
 Soal 1:
+- Ada corner case point e yang mungkin terjadi tapi tidak ada di test case contoh.
 
 Soal 2:
 - Data dari file sangat banyak, sehingga kesulitan untuk melakukan pengecekan output.
@@ -506,3 +527,5 @@ Soal 3:
 - Crontab tidak bisa menjalankan script. Hal itu dapat diatasi dengan memberi filepath yang lengkap pada setiap command.
 - Syntax zip dan unzip harus membaca manual (petunjuk) yang sangat banyak.
 - Harus mengganti tanggal menggunakan command sudo untuk menjalankan crontab.
+
+catatan : semua kendala terlah diselesaikan saat praktikum dan tidak ada revisi
