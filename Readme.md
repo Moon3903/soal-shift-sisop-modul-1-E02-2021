@@ -372,7 +372,7 @@ do
 done
 ```
 
-Melakukan pengecekan apakah ada gambar yang kembar. Gambar ke-i akan dibandingkan dengan gambar ke i+1 hingga jumlah. Pengecekan menggunakan `cmp -s file1 file2` yang akan memberikan exit status 0 juka kedua file sama. Exit status 0 dapat diambil dengan variabel `$?`. Jika kembar maka file yang terakhir dihapus dan file yang berada di belakang file tersebut namanya akan direname menjadi satu urutan lebih maju.
+Melakukan pengecekan apakah ada gambar yang kembar. Gambar ke-i akan dibandingkan dengan gambar ke i+1 hingga jumlah. Pengecekan menggunakan `cmp -s file1 file2` yang akan memberikan exit status 0 jika kedua file sama. Exit status dapat diambil dengan variabel `$?`. Jika kembar maka file yang terakhir dihapus dan file yang berada di belakang file tersebut namanya akan direname menjadi satu urutan lebih maju.
 
 #### Hasil
 ![Hasil_3a](https://user-images.githubusercontent.com/68326540/113418831-70de8f00-93f0-11eb-920d-18926bf71168.png)
