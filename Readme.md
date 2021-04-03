@@ -528,4 +528,4 @@ Soal 3:
 - Syntax zip dan unzip harus membaca manual (petunjuk) yang sangat banyak.
 - Harus mengganti tanggal menggunakan command sudo untuk menjalankan crontab.
 
-catatan : semua kendala terlah diselesaikan saat praktikum dan tidak ada revisi
+catatan : semua kendala telah diselesaikan saat praktikum dan tidak ada revisi
