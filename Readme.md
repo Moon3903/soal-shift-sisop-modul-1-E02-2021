@@ -187,7 +187,7 @@ Tipe segmen customer yang penjualannya paling sedikit adalah *Tipe Segment* deng
 Wilayah bagian (region) yang memiliki total keuntungan (profit) yang paling sedikit adalah *Nama Region* dengan total keuntungan *Total Keuntungan (Profit)*
 ```
 ## Penyelesaian
-- Menggunakan LC_ALL=C agar bisa mengambil angka desimal yang dipisahkan oleh '.' dengna tepat 
+- Menggunakan LC_ALL=C agar bisa mengambil angka desimal yang dipisahkan oleh '.' dengan tepat 
 - Karena file Laporan-TokoShiSop.tsv memiliki header maka diberikan NR > 1 agar pembacaan dapat dimulai dari baris ke-2.
 - Secara garis besar, untuk menyelesaikan soal ini menggunakan associative array. Associative array merupakan array yang indexnya dapat berupa string.
 
